@@ -1,9 +1,7 @@
 import JobApplications from "./Pages/jobApplications/jobApplicationsPage";
 
 const App = () => {
-    return (
-        <JobApplications />
-    );
-}
+  return <JobApplications />;
+};
 
 export default App;
