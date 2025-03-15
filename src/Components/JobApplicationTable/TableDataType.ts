@@ -3,7 +3,7 @@ export interface JobApplication {
   companyName: string;
   position: string;
   dateApplied: string;
-  status: string;
+  status: ApplicationStatus;
 }
 
 export enum ApplicationStatus {
