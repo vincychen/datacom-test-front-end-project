@@ -5,25 +5,28 @@ import JobApplicationTable from "../../Components/JobApplicationTable/JobApplica
 import { useJobApplications } from "./useJobApplications";
 
 function JobApplications() {
-  const { isOpen, setIsOpen, jobApplications, fetchJobApplications } =
+  const { isOpen, onCloseFormDialog, jobApplications, fetchJobApplications, onClickAddApplication } =
     useJobApplications();
 
   return (
     <div className={s.App}>
       {isOpen && (
-        <FormDialog
-          onClose={() => {
-            setIsOpen(false);
-            fetchJobApplications();
-          }}
+        <FormDialog onClose={onCloseFormDialog} />
+      )}
+      <h1>Your Job Applications</h1>
+      {jobApplications.length === 0 && (
+        <div>No applications found. Let's update your CV and apply for a new job!</div>
+      )}
+      {jobApplications.length > 0 && (
+        <JobApplicationTable
+          jobApplications={jobApplications}
+          reload={fetchJobApplications}
         />
       )}
-      <JobApplicationTable
-        jobApplications={jobApplications}
-        reload={fetchJobApplications}
-      />
       <div className={s.footer}>
-        <Button onClick={() => setIsOpen(true)}>Add Application</Button>
+        <Button onClick={onClickAddApplication}>
+          Add Application
+        </Button>
       </div>
     </div>
   );

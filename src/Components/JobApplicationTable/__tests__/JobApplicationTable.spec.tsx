@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import JobApplicationTable from '../JobApplicationTable';
-import { ApplicationStatus, JobApplication } from '../TableDataType';
+import { ApplicationStatus, JobApplication } from '../jobApplicationDataType';
 
 const jobApplications: JobApplication[] = [
   {

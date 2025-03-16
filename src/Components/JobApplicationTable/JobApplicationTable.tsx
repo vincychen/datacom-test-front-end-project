@@ -1,6 +1,8 @@
 import { Table } from "react-bootstrap";
-import { ApplicationStatus, JobApplication } from "./TableDataType";
+import { ApplicationStatus, JobApplication } from "./jobApplicationDataType";
 import DropDownButton from "../Button/Button";
+import s from "./styles.less";
+import cx from 'classnames';
 
 interface JobApplicationTableProps {
   jobApplications: JobApplication[];
@@ -20,39 +22,36 @@ const JobApplicationTable = ({
 }: JobApplicationTableProps) => {
   return (
     <div>
-      <h1>Job Application</h1>
-      {jobApplications && jobApplications.length > 0 && (
-        <Table>
-          <thead>
-            <tr>
-              <th>Company Name</th>
-              <th>Position</th>
-              <th>Status</th>
-              <th>Date Applied</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {jobApplications.map((item: JobApplication) => {
-              const date = new Date(item.dateApplied);
-              const formattedDate = `${date.toDateString()}`;
-              const status =
-                StatusMap[item.status as unknown as ApplicationStatus];
-              return (
-                <tr key={item.id}>
-                  <td>{item.companyName}</td>
-                  <td>{item.position}</td>
-                  <td>{status}</td>
-                  <td>{formattedDate}</td>
-                  <td>
-                    <DropDownButton applicationId={item.id} reload={reload} />
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </Table>
-      )}
+      <Table>
+        <thead>
+          <tr>
+            <th className={s.tableColumn}>Company Name</th>
+            <th className={s.tableColumn}>Position</th>
+            <th className={s.tableColumn}>Status</th>
+            <th className={s.tableColumn}>Date Applied</th>
+            <th className={s.tableColumn}>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {jobApplications.map((item: JobApplication) => {
+            const date = new Date(item.dateApplied);
+            const formattedDate = `${date.toDateString()}`;
+            const status =
+              StatusMap[item.status as unknown as ApplicationStatus];
+            return (
+              <tr key={item.id}>
+                <td className={cx(s.tableColumn, s.firstColumn)}>{item.companyName}</td>
+                <td className={s.tableColumn}>{item.position}</td>
+                <td className={s.tableColumn}>{status}</td>
+                <td className={s.tableColumn}>{formattedDate}</td>
+                <td className={s.tableColumn}>
+                  <DropDownButton applicationId={item.id} reload={reload} />
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </Table>
     </div>
   );
 };
