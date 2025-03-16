@@ -10,6 +10,9 @@ interface FormData {
   DateApplied: string;
 }
 
+/**
+ * Custom hook to manage the form dialog state and handle form submission.
+ */
 export default function useFormDialog() {
   const dispatch = useDispatch<AppDispatch>();
   const [formData, setFormData] = useState<FormData>({
@@ -19,6 +22,11 @@ export default function useFormDialog() {
   });
 
   const [validationError, setValidationError] = useState<string | undefined>();
+
+  /**
+   * Handles changes to form input fields.
+   * @param e - The change event from the input field.
+   */
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({
@@ -27,6 +35,10 @@ export default function useFormDialog() {
     });
   };
 
+  /**
+   * Submits the form data to the server.
+   * @param data - The form data to be submitted.
+   */
   const onSubmit = async (data: any) => {
     await JobApplicationService.addJobApplication(data)
       .then(() => {
@@ -51,6 +63,11 @@ export default function useFormDialog() {
       });
   };
 
+  /**
+   * Validates the form data.
+   * @param data - The form data to be validated.
+   * @returns An error message if validation fails, otherwise undefined.
+   */
   const validate = (data: any) => {
     let errorMessage = undefined;
     if (data.CompanyName.trim() === "") {
@@ -67,6 +84,10 @@ export default function useFormDialog() {
     return errorMessage;
   };
 
+  /**
+   * Handles form submission.
+   * @param onClose - A callback function to close the form dialog.
+   */
   const handleSubmit = async (onClose: () => void) => {
     const errorMessage = validate(formData);
     if (errorMessage) {
